@@ -1,17 +1,18 @@
 import os
+import functools
 
 
-def upper(func):
-    
-    def wrapper():
-        return func().upper()
-    return wrapper
+def decorator(func):
+    @functools.wraps(func)
+    def inner(*args):
+        str1 = func(*args)
+        return str1.upper()
+    return inner
 
 
-@upper
-def greeting():
-    name = "john"
-    return f"hello {name}"
+@decorator
+def greet(name):
+    return f"good morning {name}"
 
 
-print(greeting())
+print(greet("James"))
